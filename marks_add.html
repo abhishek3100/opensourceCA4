@@ -1,0 +1,656 @@
+<head>
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://unpkg.com/vuesax"></script>
+    <link href="https://cdn.jsdelivr.net/npm/vuesax/dist/vuesax.css" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Sen' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    rel="stylesheet">
+ <style>
+    body {
+       font-family: 'Sen';font-size: 15px;
+    }
+    </style>
+    
+</head>
+
+<body style="background-color:white;">
+    <div id="app" >
+
+        <div>
+
+
+
+            <vs-row vs-w="12">
+                <vs-col vs-offset="0" vs-type="flex" vs-justify="center" vs-align="center" vs-w="15">
+                <h1>Enter Registration Number:</h1>
+       
+                </vs-col>
+            </vs-row>
+
+            
+            <vs-row vs-w="12">
+                <vs-col vs-offset="0" vs-type="flex" vs-justify="center" vs-align="center" vs-w="15">
+           
+                <vs-input type="number" :disabled="user_reg_button" label-placeholder="Registration Id" v-model="user_reg"/>
+                
+                </vs-col>
+            </vs-row>
+                <br>
+
+                <div v-if="!user_reg_button">
+            <vs-row vs-w="12">
+                <vs-col vs-offset="0" vs-type="flex" vs-justify="center" vs-align="center" vs-w="15">
+           
+                    <vs-button @click="render_marks_add()" color="success" type="filled">Submit Registration</vs-button>
+                </vs-col>
+            </vs-row>
+        </div>
+      
+
+
+
+            <br>
+            <div v-if="user_reg_button">
+
+            
+            <vs-row vs-w="12">
+                <vs-col vs-offset="0" vs-type="flex" vs-justify="center" vs-align="center" vs-w="15">
+           
+                    <vs-button @click="edit_reg()" color="warning" type="filled">Edit Registration</vs-button>
+                </vs-col>
+            </vs-row>
+
+        </div>
+         
+
+
+
+
+
+        <div v-if="render_marks_div">
+            <div class="centerx">
+
+
+                <vs-row vs-w="12">
+
+
+                    <vs-col vs-offset="0" vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
+                        <h2>Marks</h2>
+               
+               
+               
+                    </vs-col>
+                    <vs-col vs-offset="0" vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
+                        <h2>Out Of Marks</h2>
+               
+               
+               
+                    </vs-col>
+                </vs-row>
+
+
+                <vs-row vs-w="12">
+
+
+                 
+                 
+                    <vs-col vs-offset="0" vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
+                        <vs-input-number min="0" max="100" v-model="os_marks" label="Operating System:"/>
+                      
+               
+               
+               
+               
+               
+                    </vs-col>
+                    
+                    <vs-col vs-offset="0" vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
+                        <vs-input-number :min="os_marks" max="100" v-model="os_out_of" label="Operating System:"/>
+                      
+               
+               
+               
+               
+               
+                    </vs-col>
+             
+                </vs-row>
+
+
+
+
+                <vs-row vs-w="12">
+
+
+                 
+                 
+                    <vs-col vs-offset="0" vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
+                        <vs-input-number min="0" max="100" v-model="dbms_marks" label="Database System:"/>
+                      
+               
+               
+               
+               
+               
+                    </vs-col>
+                    
+                    <vs-col vs-offset="0" vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
+                        <vs-input-number :min="dbms_marks" max="100" v-model="dbms_out_of" label="Database System:"/>
+                      
+               
+               
+               
+               
+               
+                    </vs-col>
+             
+                </vs-row>
+
+
+
+
+
+
+
+                <vs-row vs-w="12">
+
+
+                 
+                 
+                    <vs-col vs-offset="0" vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
+                        <vs-input-number min="0" max="100" v-model="automata_marks" label="Automata:"/>
+                      
+               
+               
+               
+               
+               
+                    </vs-col>
+                    
+                    <vs-col vs-offset="0" vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
+                        <vs-input-number  :min="automata_marks" max="100" v-model="automata_out_of" label="Automata:"/>
+                      
+               
+               
+               
+               
+               
+                    </vs-col>
+             
+                </vs-row>
+
+
+
+                <vs-row vs-w="12">
+                    <vs-col vs-offset="0" vs-type="flex" vs-justify="center" vs-align="center" vs-w="15">
+               
+                        <vs-button @click="submit_marks()" color="success" type="filled">Submit Marks</vs-button>
+                    </vs-col>
+                </vs-row>
+           
+              </div>
+
+
+        </div>
+
+        <vs-divider color="success" icon="arrow_downward"></vs-divider>
+        <div class="marks_data">
+
+            <vs-row vs-w="12">
+                <vs-col vs-offset="0" vs-type="flex" vs-justify="center" vs-align="center" vs-w="15">
+                    <h1>Get Student Analysis:</h1>
+           
+                     </vs-col>
+            </vs-row>
+
+            <vs-row vs-w="12">
+                <vs-col vs-offset="0" vs-type="flex" vs-justify="center" vs-align="center" vs-w="15">
+           
+                <vs-input type="number" :disabled="user_reg_button" label-placeholder="Registration Id" v-model="user_reg"/>
+                
+                </vs-col>
+            </vs-row>
+                <br>
+
+                <div v-if="!user_reg_button">
+            <vs-row vs-w="12">
+                <vs-col vs-offset="0" vs-type="flex" vs-justify="center" vs-align="center" vs-w="15">
+           
+                    <vs-button @click="get_marks_data()" color="success" type="filled">Submit Registration</vs-button>
+                </vs-col>
+            </vs-row>
+
+
+
+
+                <!-- for displaying marks -->
+           
+            
+     
+
+            <div :key="index" v-for="(item,index) in marks_data">
+
+
+
+                <vs-row>
+                    <vs-col :key="index"  vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
+                        <h1>Test Number : {{index+1}}</h1>
+                    </vs-col>
+                    <vs-col :key="index"  vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
+                        
+                    </vs-col>
+                  </vs-row>
+
+
+                  <vs-col :key="index"  vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
+                    <img  width="80%" :src="item['bar']" >
+                </vs-col>
+                <vs-col :key="index"  vs-type="flex" vs-justify="center" vs-align="center" vs-w="6">
+                    <img  width="80%" :src="item['pie']" >
+                </vs-col>
+              </vs-row>
+
+
+       
+
+                
+
+
+
+                <vs-row vs-w="5">
+                    <vs-col vs-offset="0" vs-type="flex" vs-justify="center" vs-align="center" vs-w="15">
+                        <h1>Operating System :</h1>
+                       
+                        
+               
+                    </vs-col>             
+            
+                </vs-row>
+          
+                <vs-row vs-w="5">
+                    <vs-col vs-offset="0" vs-type="flex" vs-justify="center" vs-align="center" vs-w="15">
+                        <h1>Marks: {{item['os_marks']}}/ {{item['os_out_of']}}  </h1>
+    
+                    </vs-col>
+                     </vs-row>
+                     <vs-row vs-w="5">
+                        <vs-col vs-offset="0" vs-type="flex" vs-justify="center" vs-align="center" vs-w="15">
+                            <h1>Percentage: {{((item['os_marks']/item['os_out_of'])*100).toFixed(2)}} %</h1>
+        
+                        </vs-col>
+                         </vs-row>
+
+                <vs-row vs-w="5">
+                    <vs-col vs-offset="0" vs-type="flex" vs-justify="center" vs-align="center" vs-w="15">
+                        <vs-progress :height="10" :percent="(item['os_marks']/item['os_out_of'])*100" color="success"></vs-progress>
+              
+                       
+                        
+               
+                    </vs-col>             
+            
+                </vs-row>
+
+
+
+                <br>
+                <vs-row vs-w="5">
+                    <vs-col vs-offset="0" vs-type="flex" vs-justify="center" vs-align="center" vs-w="15">
+                        <h1>Database Management :</h1>
+                       
+                        
+               
+                    </vs-col>             
+            
+                </vs-row>
+          
+                <vs-row vs-w="5">
+                    <vs-col vs-offset="0" vs-type="flex" vs-justify="center" vs-align="center" vs-w="15">
+                        <h1>Marks: {{item['dbms_marks']}}/ {{item['dbms_out_of']}}  </h1>
+    
+                    </vs-col>
+                     </vs-row>
+                     <vs-row vs-w="5">
+                        <vs-col vs-offset="0" vs-type="flex" vs-justify="center" vs-align="center" vs-w="15">
+                            <h1>Percentage: {{((item['dbms_marks']/item['dbms_out_of'])*100).toFixed(2)}} %</h1>
+        
+                        </vs-col>
+                         </vs-row>
+
+                <vs-row vs-w="5">
+                    <vs-col vs-offset="0" vs-type="flex" vs-justify="center" vs-align="center" vs-w="15">
+                        <vs-progress :height="10" :percent="(item['dbms_marks']/item['dbms_out_of'])*100" color="success"></vs-progress>
+              
+                       
+                        
+               
+                    </vs-col>             
+            
+                </vs-row>
+
+        
+
+
+
+
+
+                <br>
+
+
+
+                <vs-row vs-w="5">
+                    <vs-col vs-offset="0" vs-type="flex" vs-justify="center" vs-align="center" vs-w="15">
+                        <h1>Automata :</h1>
+                       
+                        
+               
+                    </vs-col>             
+            
+                </vs-row>
+          
+                <vs-row vs-w="5">
+                    <vs-col vs-offset="0" vs-type="flex" vs-justify="center" vs-align="center" vs-w="15">
+                        <h1>Marks: {{item['automata_marks']}}/ {{item['automata_out_of']}}  </h1>
+    
+                    </vs-col>
+                     </vs-row>
+                     <vs-row vs-w="5">
+                        <vs-col vs-offset="0" vs-type="flex" vs-justify="center" vs-align="center" vs-w="15">
+                            <h1>Percentage: {{((item['automata_marks']/item['automata_out_of'])*100).toFixed(2)}} %</h1>
+        
+                        </vs-col>
+                         </vs-row>
+
+                <vs-row vs-w="5">
+                    <vs-col vs-offset="0" vs-type="flex" vs-justify="center" vs-align="center" vs-w="15">
+                        <vs-progress :height="10" :percent="(item['automata_marks']/item['automata_out_of'])*100" color="success"></vs-progress>
+              
+                       
+                        
+               
+                    </vs-col>             
+            
+                </vs-row>
+
+       
+
+              
+
+                <br>
+
+            </div>
+
+
+      
+
+
+
+
+        </div>
+
+
+
+
+
+
+
+
+    </div>
+
+</body>
+
+
+
+<script>
+
+    new Vue({
+       el: '#app',
+       mounted()
+       {
+
+       },
+    
+           methods: {
+          
+            get_marks_data()
+            {
+
+                if(this.user_reg!=null)
+                   {
+          
+                
+
+
+                const scope=this;
+                   scope.$vs.loading();
+         
+                   var link='http://0.0.0.0:5002/opensourceca/itsabhisehk/getmarks/'+this.user_reg
+                fetch(link, {
+                    mode: 'cors',
+                    method:'GET',
+               
+                    })
+                    .then(
+    function(response) {
+      if (response.status !== 200) {
+        console.log(
+          response.status);
+          scope.$vs.loading.close()
+        return;
+      }
+
+      // Examine the text in the response
+      response.json().then(function(data) {
+        console.log(data);
+        if('no_data' in data)
+        {
+            scope.$vs.loading.close()
+          
+          
+
+        scope.alert_user('No Data Available For Registration Id '+scope.user_reg,'First Add Marks From Above For Id '+scope.user_reg,'warning')
+        }
+        else
+        {
+
+        scope.$vs.loading.close()
+        scope.marks_data=data
+     
+
+        }
+
+     
+
+
+
+
+
+
+
+
+
+
+      });
+    }
+  )
+  .catch(function(err) {
+    console.log('Fetch Error :-S', err);
+    scope.$vs.loading.close()
+    this.$vs.notify({
+        title:'Some Error Occuered ',
+        text:'',
+        color:'danger',
+        position:'top-center'
+      })
+  });   
+            
+
+
+}
+                   else{
+              
+                    this.alert_user('Enter A Valid Registration Id','','danger')
+
+                   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            },
+               submit_marks()
+               {
+                this.make_req({'os':{'os_marks':this.os_marks,'os_out_of':this.os_out_of},'dbms':{'dbms_marks':this.dbms_marks,'dbms_out_of':this.dbms_out_of},'automata':{'automata_marks':this.automata_marks,'automata_out_of':this.automata_out_of}});
+               },
+               edit_reg()
+               {
+               this.user_reg_button=false
+               this.render_marks_div=false
+
+               },
+               render_marks_add()
+               {
+
+                   if(this.user_reg!=null)
+                   {
+                   this.user_reg_button=true
+                   this.render_marks_div=true
+
+                   }
+                   else{
+                    this.user_reg_button=false
+                    this.render_marks_div=false
+                    this.alert_user('Enter A Valid Registration Id','','danger')
+
+                   }
+
+               },
+
+               make_req(body)
+               {
+                   const scope=this;
+                   scope.$vs.loading();
+                   var link=this.server+this.user_reg
+                fetch(link, {
+                    mode: 'cors',
+                    method:'POST',
+                    body:JSON.stringify(body) // 'cors' by default
+                    })
+                    .then(
+    function(response) {
+      if (response.status !== 200) {
+        console.log(
+          response.status);
+          scope.$vs.loading.close()
+        return;
+      }
+
+      // Examine the text in the response
+      response.json().then(function(data) {
+        console.log(data);
+        if('success' in data)
+        {
+            scope.$vs.loading.close()
+            scope.user_reg_button=false
+                    scope.render_marks_div=false
+
+        scope.alert_user('Marks Stored','Marks Has Been Stored For Registration Id '+scope.user_reg,'success')
+        }
+        else
+        {
+
+        scope.$vs.loading.close()
+        scope.alert_user('Failure','Error Storing','danger')
+        }
+
+     
+
+
+
+
+
+
+
+
+
+
+      });
+    }
+  )
+  .catch(function(err) {
+    console.log('Fetch Error :-S', err);
+    scope.$vs.loading.close()
+    this.$vs.notify({
+        title:'Some Error Occuered ',
+        text:'',
+        color:'danger',
+        position:'top-center'
+      })
+  });   
+                
+
+
+
+               },
+
+               alert_user(message,extra_message,color)
+               {
+                this.$vs.notify({
+        title:message,
+        text:extra_message,
+        color:color,
+        position:'top-center'
+      })
+
+
+               },
+
+          
+
+
+
+      
+
+
+    
+         
+           },
+       
+           watch: {
+              
+            
+       
+           },
+           data() {
+               return {
+                marks_data:[],
+                   os_marks:0,
+                   os_out_of:100,
+                   dbms_marks:0,
+                   dbms_out_of:100,
+                   automata_marks:0,
+                   automata_out_of:100,
+                render_marks_div:false,
+                user_reg:null,
+                server:'http://0.0.0.0:5002/opensourceca/itsabhisehk/submitmarks/',
+                user_reg_button:false
+       
+
+               }
+           }});
+
+
+</script>
+            
